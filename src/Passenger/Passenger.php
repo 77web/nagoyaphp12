@@ -25,10 +25,6 @@ class Passenger
     private $welfare;
 
     /**
-     * @var bool
-     */
-    private $withAdult = false;
-    /**
      * @param bool $pass
      * @param bool $child
      * @param bool $infant
@@ -79,21 +75,6 @@ class Passenger
      */
     public function isInfantWithAdult()
     {
-        return $this->infant && $this->withAdult;
-    }
-
-    public function setWithAdult()
-    {
-        $this->withAdult = true;
-
-        return $this;
-    }
-
-    /**
-     * @return Passenger
-     */
-    public function markWithAdult()
-    {
-        return new self($this->pass, $this->child, true, false, $this->welfare);
+        return $this->infant;
     }
 }

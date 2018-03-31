@@ -26,7 +26,6 @@ class AppTest extends TestCase
         $expect = (int)$expect;
         $app = new App(new PassengerCollectionFactory(new PassengerFactory()), new FareCalculator([
             new Infant(),
-            new InfantWithAdult(),
             new Child(),
             new Pass(),
             new Welfare(),

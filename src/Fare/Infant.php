@@ -10,7 +10,7 @@ class Infant implements FareDefinitionInterface
 {
     public function supports(Passenger $passenger)
     {
-        return $passenger->isInfant() && !$passenger->isInfantWithAdult();
+        return $passenger->isInfant();
     }
 
     public function getMultiplier()
