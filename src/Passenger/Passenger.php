@@ -69,12 +69,4 @@ class Passenger
     {
         return $this->welfare;
     }
-
-    /**
-     * @return bool
-     */
-    public function isInfantWithAdult()
-    {
-        return $this->infant;
-    }
 }
