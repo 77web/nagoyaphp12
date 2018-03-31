@@ -91,7 +91,7 @@ class FareCalculator
     }
 
     /**
-     * 10円未満切り捨て
+     * 10円未満切り上げる
      *
      * @param int $baseFare
      * @param float $multiplier
