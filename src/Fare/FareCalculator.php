@@ -29,15 +29,12 @@ class FareCalculator
     public function calculate($baseFare, PassengerCollection $passengers)
     {
         $amount = 0;
-        $freeInfants = $this->getFreeInfantsCount($passengers);
 
-
-        foreach ($passengers as $passenger) {
+        // 大人
+        $adultCount = 0;
+        foreach ($passengers->getAdults() as $passenger) {
+            $adultCount++;
             $multiplier = 1;
-            if ($passenger->isInfant() && $freeInfants > 0) {
-                $passenger->setWithAdult();
-                $freeInfants--;
-            }
 
             foreach ($this->definitions as $definition) {
                 if ($definition->supports($passenger)) {
@@ -46,6 +43,48 @@ class FareCalculator
             }
 
             $amount += $this->makeFare($baseFare, $multiplier);
+        }
+
+        // 子供料金
+        foreach ($passengers->getChildren() as $passenger) {
+            $multiplier = 1;
+
+            foreach ($this->definitions as $definition) {
+                if ($definition->supports($passenger)) {
+                    $multiplier = $multiplier * $definition->getMultiplier();
+                }
+            }
+
+            $amount += $this->makeFare($baseFare, $multiplier);
+        }
+
+        // 幼児
+        $freeInfants = $this->getFreeInfantsCount($adultCount);
+        $infants = [];
+        foreach ($passengers->getInfants() as $passenger) {
+            $multiplier = 1;
+
+            foreach ($this->definitions as $definition) {
+                if ($definition->supports($passenger)) {
+                    $multiplier = $multiplier * $definition->getMultiplier();
+                }
+            }
+
+            $fare = $this->makeFare($baseFare, $multiplier);
+            $infants[] = [
+                'passenger' => $passenger,
+                'fare' => $fare,
+            ];
+        }
+        // 無料幼児を削除
+        if ($freeInfants > 0) {
+            uasort($infants, function($a, $b){
+                return $a['fare'] < $b['fare'];
+            });
+            $infants = array_slice($infants, $freeInfants);
+        }
+        foreach ($infants as $infantData) {
+            $amount += $infantData['fare'];
         }
 
         return $amount;
@@ -65,9 +104,15 @@ class FareCalculator
         return round($fare, -1, PHP_ROUND_HALF_DOWN);
     }
 
-    private function getFreeInfantsCount(PassengerCollection $passengers)
+    /**
+     * 無料幼児の人数
+     *
+     * @param int $adultCount
+     * @return float|int
+     */
+    private function getFreeInfantsCount($adultCount)
     {
-        return count($passengers->getAdults()) * 2;
+        return $adultCount * 2;
     }
 
 }

@@ -43,4 +43,14 @@ class PassengerCollection extends \ArrayIterator
     {
         return $this->adults;
     }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function getInfants()
+    {
+        return $this->infants;
+    }
 }
