@@ -76,7 +76,7 @@ class FareCalculator
                 'fare' => $fare,
             ];
         }
-        // 無料幼児を削除
+        // 料金高い順で無料幼児を削除
         if ($freeInfants > 0) {
             uasort($infants, function($a, $b){
                 return $a['fare'] < $b['fare'];
