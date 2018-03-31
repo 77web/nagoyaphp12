@@ -75,6 +75,6 @@ class FareCalculatorTest extends TestCase
             new Passenger(false, true, false, false, true),
         ]);
 
-        $this->assertEquals(25, $this->SUT->calculate(100, $passengers));
+        $this->assertEquals(20, $this->SUT->calculate(100, $passengers));
     }
 }

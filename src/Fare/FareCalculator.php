@@ -37,9 +37,23 @@ class FareCalculator
                 }
             }
 
-            $amount += $baseFare * $multiplier;
+            $amount += $this->makeFare($baseFare, $multiplier);
         }
 
         return $amount;
+    }
+
+    /**
+     * 10円未満切り捨て
+     *
+     * @param int $baseFare
+     * @param float $multiplier
+     * @return int
+     */
+    private function makeFare($baseFare, $multiplier)
+    {
+        $fare = $baseFare * $multiplier;
+
+        return round($fare, -1, PHP_ROUND_HALF_DOWN);
     }
 }
