@@ -17,11 +17,6 @@ class Passenger
     /**
      * @var bool
      */
-    private $infantWithAdult;
-
-    /**
-     * @var bool
-     */
     private $infant;
 
     /**
@@ -30,17 +25,19 @@ class Passenger
     private $welfare;
 
     /**
+     * @var bool
+     */
+    private $withAdult = false;
+    /**
      * @param bool $pass
      * @param bool $child
-     * @param bool $infantWithAdult
      * @param bool $infant
      * @param bool $welfare
      */
-    public function __construct($pass = false, $child = false, $infantWithAdult = false, $infant = false, $welfare = false)
+    public function __construct($pass = false, $child = false, $infant = false, $welfare = false)
     {
         $this->pass = $pass;
         $this->child = $child;
-        $this->infantWithAdult = $infantWithAdult;
         $this->infant = $infant;
         $this->welfare = $welfare;
     }
@@ -82,6 +79,13 @@ class Passenger
      */
     public function isInfantWithAdult()
     {
-        return $this->infantWithAdult;
+        return $this->infant && $this->withAdult;
+    }
+
+    public function setWithAdult()
+    {
+        $this->withAdult = true;
+
+        return $this;
     }
 }

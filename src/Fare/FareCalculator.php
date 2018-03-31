@@ -29,8 +29,16 @@ class FareCalculator
     public function calculate($baseFare, PassengerCollection $passengers)
     {
         $amount = 0;
+        $freeInfants = $this->getFreeInfantsCount($passengers);
+
+
         foreach ($passengers as $passenger) {
             $multiplier = 1;
+            if ($passenger->isInfant() && $freeInfants > 0) {
+                $passenger->setWithAdult();
+                $freeInfants--;
+            }
+
             foreach ($this->definitions as $definition) {
                 if ($definition->supports($passenger)) {
                     $multiplier = $multiplier * $definition->getMultiplier();
@@ -56,4 +64,10 @@ class FareCalculator
 
         return round($fare, -1, PHP_ROUND_HALF_DOWN);
     }
+
+    private function getFreeInfantsCount(PassengerCollection $passengers)
+    {
+        return count($passengers->getAdults()) * 2;
+    }
+
 }
