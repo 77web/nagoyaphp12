@@ -88,4 +88,12 @@ class Passenger
 
         return $this;
     }
+
+    /**
+     * @return Passenger
+     */
+    public function markWithAdult()
+    {
+        return new self($this->pass, $this->child, true, false, $this->welfare);
+    }
 }
