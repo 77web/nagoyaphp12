@@ -58,13 +58,13 @@ class FareCalculatorTest extends TestCase
         $this->assertEquals(100, $this->SUT->calculate(100, $passengers));
     }
 
-    public function test_子供福祉_通常料金100円()
+    public function test_子供福祉_通常料金910円()
     {
         $passengers = new PassengerCollection([
             new Passenger(false, true, false, true),
         ]);
 
-        $this->assertEquals(30, $this->SUT->calculate(100, $passengers));
+        $this->assertEquals(230, $this->SUT->calculate(910, $passengers));
     }
 
 }
