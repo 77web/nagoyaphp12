@@ -15,6 +15,6 @@ class Pass implements FareDefinitionInterface
 
     public function getMultiplier()
     {
-        return 0.5;
+        return 0;
     }
 }
