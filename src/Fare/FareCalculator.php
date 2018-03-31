@@ -100,8 +100,9 @@ class FareCalculator
     private function makeFare($baseFare, $multiplier)
     {
         $fare = $baseFare * $multiplier;
+        $gap = $fare % 10;
 
-        return round($fare, -1, PHP_ROUND_HALF_DOWN);
+        return $gap > 0 ? (round($fare, -1, PHP_ROUND_HALF_DOWN) + 10) : $fare;
     }
 
     /**
