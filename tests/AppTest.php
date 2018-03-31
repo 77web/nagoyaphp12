@@ -4,6 +4,14 @@
 namespace NagoyaPhp\Twelve;
 
 
+use NagoyaPhp\Twelve\Fare\Child;
+use NagoyaPhp\Twelve\Fare\FareCalculator;
+use NagoyaPhp\Twelve\Fare\Infant;
+use NagoyaPhp\Twelve\Fare\InfantWithAdult;
+use NagoyaPhp\Twelve\Fare\Pass;
+use NagoyaPhp\Twelve\Fare\Welfare;
+use NagoyaPhp\Twelve\Passenger\PassengerCollectionFactory;
+use NagoyaPhp\Twelve\Passenger\PassengerFactory;
 use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
@@ -16,7 +24,13 @@ class AppTest extends TestCase
     public function test($input, $expect)
     {
         $expect = (int)$expect;
-        $app = new App();
+        $app = new App(new PassengerCollectionFactory(new PassengerFactory()), new FareCalculator([
+            new Infant(),
+            new InfantWithAdult(),
+            new Child(),
+            new Pass(),
+            new Welfare(),
+        ]));
 
         $this->assertEquals($expect, $app->run($input));
     }

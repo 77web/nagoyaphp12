@@ -19,6 +19,15 @@ class App
      */
     private $fareCalculator;
 
+    /**
+     * @param PassengerCollectionFactory $passengerCollectionFactory
+     * @param FareCalculator $fareCalculator
+     */
+    public function __construct(PassengerCollectionFactory $passengerCollectionFactory, FareCalculator $fareCalculator)
+    {
+        $this->passengerCollectionFactory = $passengerCollectionFactory;
+        $this->fareCalculator = $fareCalculator;
+    }
 
     public function run($input)
     {
