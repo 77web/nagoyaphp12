@@ -25,11 +25,20 @@ class PassengerCollectionFactory
      */
     public function create(array $passengerCodes)
     {
-        $passengers = [];
+        $infants = [];
+        $children = [];
+        $adults = [];
         foreach ($passengerCodes as $passengerCode) {
-            $passengers[] = $this->passengerFactory->createFromCode($passengerCode);
+            $passenger = $this->passengerFactory->createFromCode($passengerCode);
+            if ($passenger->isInfant()) {
+                $infants[] = $passenger;
+            } elseif ($passenger->isChild()) {
+                $children[] = $passenger;
+            } else {
+                $adults[] = $passenger;
+            }
         }
 
-        return new PassengerCollection($passengers);
+        return new PassengerCollection($adults, $children, $infants);
     }
 }

@@ -4,7 +4,7 @@
 namespace NagoyaPhp\Twelve\Passenger;
 
 
-class PassengerCollection extends \ArrayIterator
+class PassengerCollection
 {
     /**
      * @var Passenger[]
@@ -22,21 +22,15 @@ class PassengerCollection extends \ArrayIterator
     private $infants;
 
     /**
-     * @param Passenger[] $passengers
+     * @param Passenger[] $adults
+     * @param Passenger[] $children
+     * @param Passenger[] $infants
      */
-    public function __construct(array $passengers)
+    public function __construct(array $adults, array $children, array $infants)
     {
-        parent::__construct($passengers);
-
-        $this->adults = array_filter($passengers, function(Passenger $passenger){
-            return !$passenger->isChild() && !$passenger->isInfant();
-        });
-        $this->children = array_filter($passengers, function(Passenger $passenger){
-            return $passenger->isChild();
-        });
-        $this->infants = array_filter($passengers, function(Passenger $passenger){
-            return $passenger->isInfant();
-        });
+        $this->adults = $adults;
+        $this->children = $children;
+        $this->infants = $infants;
     }
 
     public function getAdults()
